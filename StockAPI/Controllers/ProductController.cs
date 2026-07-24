@@ -2,8 +2,6 @@
 using StockAPI.Dto;
 using StockAPI.Services;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace StockAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -19,9 +17,9 @@ namespace StockAPI.Controllers
 
         // GET: api/<ProductController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProductsAsync()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(await _service.GetAllProductsAsync());
         }
 
         // GET api/<ProductController>/5
@@ -32,7 +30,7 @@ namespace StockAPI.Controllers
         }
 
         // POST api/<ProductController>
-        [HttpPost]
+        [HttpPost("/register")]
         public async Task<IActionResult> RegisterProductAsync([FromBody] ProductDTO product)
         {
             var result = await _service.RegisterProductAsync(product);
