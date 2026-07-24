@@ -1,4 +1,6 @@
 ﻿using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
+using StockAPI.Common;
 using StockAPI.Dto;
 using StockAPI.Models;
 using StockAPI.Repositorys;
@@ -16,40 +18,20 @@ namespace StockAPI.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
+        public async Task<Result<ProductDTO>> RegisterProductAsync(ProductDTO product)
         {
-            return _mapper.Map<List<ProductDTO>>(_repository.GetAllProductsAsync());
-        }
-
-        public async Task<ProductDTO?> GetProductByEANAsync(string EAN)
-        {
-            var product = _repository.GetProductByEANAsync(EAN);
-
-            if (product == null)
+            try
             {
-                return null;
+                var model = _mapper.Map<ProductModel>(product);
+
+                await _repository.RegisterProductAsync(model);
+
+                return Result<ProductDTO>.Success(product);
             }
-
-            return _mapper.Map<ProductDTO>(product);
-        }
-
-        public async Task<ProductDTO?> GetProductByIdAsync(long id)
-        {
-            var product = _repository.GetProductByIdAsync(id);
-
-            if (product == null)
+            catch (DbUpdateException)
             {
-                return null;
+                return Result<ProductDTO>.Failure("Produto Ja Cadastrado!!");
             }
-
-            return _mapper.Map<ProductDTO>(product);
-        }
-
-        public async Task RegisterProductAsync(ProductDTO product)
-        {
-            var model = _mapper.Map<ProductModel>(product);
-
-            await _repository.RegisterProductAsync(model);
         }
     }
 }
