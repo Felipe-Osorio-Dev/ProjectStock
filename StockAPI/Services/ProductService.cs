@@ -18,6 +18,13 @@ namespace StockAPI.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
+        {
+            var products = await _repository.GetAllProductsAsync();
+
+            return _mapper.Map<IEnumerable<ProductDTO>>(products);
+        }
+
         public async Task<Result<ProductDTO>> RegisterProductAsync(ProductDTO product)
         {
             try
