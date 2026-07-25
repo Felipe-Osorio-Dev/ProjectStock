@@ -23,10 +23,17 @@ namespace StockAPI.Controllers
         }
 
         // GET api/<ProductController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{ean}")]
+        public async Task<ActionResult<ProductDTO>> GetProductByEAN(string ean)
         {
-            return "value";
+            var result = await _service.GetProductByEanAsync(ean);
+
+            if (!result.IsSuccess)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok(result.Value);
         }
 
         // POST api/<ProductController>
