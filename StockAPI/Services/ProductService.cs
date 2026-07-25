@@ -25,6 +25,20 @@ namespace StockAPI.Services
             return _mapper.Map<IEnumerable<ProductDTO>>(products);
         }
 
+        public async Task<Result<ProductDTO>> GetProductByEanAsync(string ean)
+        {
+            var model = await _repository.GetProductByEanAsync(ean);
+
+            if(model == null)
+            {
+                return Result<ProductDTO>.Failure("Produto não Encontrado!!");
+            }
+
+            var product = _mapper.Map<ProductDTO>(model);
+
+            return Result<ProductDTO>.Success(product);
+        }
+
         public async Task<Result<ProductDTO>> RegisterProductAsync(ProductDTO product)
         {
             try
