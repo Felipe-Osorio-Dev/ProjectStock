@@ -18,9 +18,9 @@ namespace StockAPI.Repositorys
             return await _dbContext.Produtos.ToListAsync();
         }
 
-        public async Task<ProductModel?> GetProductByEANAsync(string EAN)
+        public async Task<ProductModel?> GetProductByEanAsync(string ean)
         { 
-            return await _dbContext.Produtos.FirstOrDefaultAsync(p => p.EAN == EAN);
+            return await _dbContext.Produtos.FirstOrDefaultAsync(p => p.EAN == ean);
         }
 
         public async Task<ProductModel?> GetProductByIdAsync(long id)
