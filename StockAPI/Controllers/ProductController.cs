@@ -33,7 +33,7 @@ namespace StockAPI.Controllers
                 return NotFound(result.Error);
             }
 
-            return Ok(result.Value);
+            return result.Value;
         }
 
         // POST api/<ProductController>
@@ -57,9 +57,17 @@ namespace StockAPI.Controllers
         }
 
         // DELETE api/<ProductController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{ean}")]
+        public async Task<ActionResult<string>> DeleteProductByEanAsync(string ean)
         {
+            var result = await _service.DeleteProductByEanAsync(ean);
+
+            if(!result.IsSuccess)
+            {
+                return NotFound(result.Error);
+            }
+
+            return result.Value;
         }
     }
 }
