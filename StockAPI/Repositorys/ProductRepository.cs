@@ -13,6 +13,12 @@ namespace StockAPI.Repositorys
             _dbContext = dbContext;
         }
 
+        public async Task DeleteProductByEanAsync(ProductModel model)
+        {
+            _dbContext.Produtos.Remove(model);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<ProductModel>> GetAllProductsAsync()
         {
             return await _dbContext.Produtos.ToListAsync();
@@ -28,9 +34,9 @@ namespace StockAPI.Repositorys
             return await _dbContext.Produtos.FindAsync(id);
         }
 
-        public async Task RegisterProductAsync(ProductModel product)
+        public async Task RegisterProductAsync(ProductModel model)
         {
-            await _dbContext.Produtos.AddAsync(product);
+            await _dbContext.Produtos.AddAsync(model);
             await _dbContext.SaveChangesAsync();
         }
     }
