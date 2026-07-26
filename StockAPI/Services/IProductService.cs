@@ -8,5 +8,6 @@ namespace StockAPI.Services
         Task<Result<ProductDTO>> RegisterProductAsync(ProductDTO product);
         Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
         Task<Result<ProductDTO>> GetProductByEanAsync(string ean);
+        Task<Result<string>> DeleteProductByEanAsync(string ean);
     }
 }

@@ -18,6 +18,20 @@ namespace StockAPI.Services
             _mapper = mapper;
         }
 
+        public async Task<Result<string>> DeleteProductByEanAsync(string ean)
+        {
+            var model = await _repository.GetProductByEanAsync(ean);
+
+            if (model == null)
+            {
+                return Result<string>.Failure("Produto não Encontrado!!");
+            }
+
+            await _repository.DeleteProductByEanAsync(model);
+
+            return Result<string>.Success(model.Name);
+        }
+
         public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
         {
             var products = await _repository.GetAllProductsAsync();
