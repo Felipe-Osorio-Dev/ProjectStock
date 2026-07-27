@@ -68,5 +68,21 @@ namespace StockAPI.Services
                 return Result<ProductDTO>.Failure("Produto Ja Cadastrado!!");
             }
         }
+
+        public async Task<Result<ProductDTO>> UpdateProductAsync(string ean, ProductDTO product)
+        {
+            var model = await _repository.GetProductByEanAsync(ean);
+
+            if (model == null)
+            {
+                return Result<ProductDTO>.Failure("Produto não Encontrado!!");
+            }
+
+            _mapper.Map(product, model);
+
+            await _repository.UpdateProductAsync();
+
+            return Result<ProductDTO>.Success(product);
+        }
     }
 }
