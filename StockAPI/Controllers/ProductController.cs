@@ -37,7 +37,7 @@ namespace StockAPI.Controllers
         }
 
         // POST api/<ProductController>
-        [HttpPost("/register")]
+        [HttpPost]
         public async Task<IActionResult> RegisterProductAsync([FromBody] ProductDTO product)
         {
             var result = await _service.RegisterProductAsync(product);
@@ -47,13 +47,21 @@ namespace StockAPI.Controllers
                 return Conflict(result.Error);
             }
 
-            return Created();
+            return CreatedAtAction(nameof(GetProductByEAN), new { ean = result.Value.EAN }, result.Value);
         }
 
         // PUT api/<ProductController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{ean}")]
+        public async Task<ActionResult> PutProductAsync(string ean, [FromBody] ProductDTO product)
         {
+            var result = await _service.UpdateProductAsync(ean, product);
+
+            if (!result.IsSuccess)
+            {
+                return NotFound(result.Error);
+            }
+
+            return CreatedAtAction(nameof(GetProductByEAN), new { ean = result.Value.EAN }, result.Value);
         }
 
         // DELETE api/<ProductController>/5
