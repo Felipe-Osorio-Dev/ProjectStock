@@ -39,5 +39,10 @@ namespace StockAPI.Repositorys
             await _dbContext.Produtos.AddAsync(model);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task UpdateProductAsync()
+        {
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

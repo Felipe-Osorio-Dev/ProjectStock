@@ -9,5 +9,6 @@ namespace StockAPI.Repositorys
         Task<ProductModel?> GetProductByEanAsync(string ean);
         Task RegisterProductAsync(ProductModel model);
         Task DeleteProductByEanAsync(ProductModel model);
+        Task UpdateProductAsync();
     }
 }
