@@ -38,7 +38,7 @@ namespace StockAPI.Controllers
 
         // POST api/<ProductController>
         [HttpPost]
-        public async Task<IActionResult> RegisterProductAsync([FromBody] ProductDTO product)
+        public async Task<ActionResult> RegisterProductAsync([FromBody] ProductDTO product)
         {
             var result = await _service.RegisterProductAsync(product);
 
@@ -61,12 +61,12 @@ namespace StockAPI.Controllers
                 return NotFound(result.Error);
             }
 
-            return CreatedAtAction(nameof(GetProductByEAN), new { ean = result.Value.EAN }, result.Value);
+            return Ok();
         }
 
         // DELETE api/<ProductController>/5
         [HttpDelete("{ean}")]
-        public async Task<ActionResult<string>> DeleteProductByEanAsync(string ean)
+        public async Task<ActionResult> DeleteProductByEanAsync(string ean)
         {
             var result = await _service.DeleteProductByEanAsync(ean);
 
@@ -75,7 +75,7 @@ namespace StockAPI.Controllers
                 return NotFound(result.Error);
             }
 
-            return result.Value;
+            return NoContent();
         }
     }
 }
