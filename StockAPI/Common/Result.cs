@@ -1,22 +1,33 @@
 ﻿namespace StockAPI.Common
 {
-    public class Result<T>
+    public class Result
     {
-        public bool IsSuccess { get; set; }
-        public T Value { get; set; }
-        public string Error { get; set; }
+        public bool IsSuccess { get; }
+        public string? Error { get; }
 
-        private Result(bool  success, T value, string error)
+        protected Result(bool successc, string? error)
         {
-            IsSuccess = success;
-            Value = value;
+            IsSuccess = successc;
             Error = error;
+        }
+
+        public static Result Success() => new(true, null);
+        public static Result Failure(string erro) => new(false, erro);
+    }
+
+    public class Result<T> : Result
+    {
+        public T Value { get; set; }
+
+        private Result(bool success, T value, string error) : base(success, error)
+        {
+            Value = value;
         }
 
         public static Result<T> Success(T value) =>
             new Result<T>(true, value, string.Empty);
 
-        public static Result<T> Failure(string error) =>
+        public static new Result<T> Failure(string error) =>
             new Result<T>(false, default!, error);
     }
 }
