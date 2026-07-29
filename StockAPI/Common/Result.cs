@@ -5,9 +5,9 @@
         public bool IsSuccess { get; }
         public string? Error { get; }
 
-        protected Result(bool successc, string? error)
+        protected Result(bool success, string? error)
         {
-            IsSuccess = successc;
+            IsSuccess = success;
             Error = error;
         }
 
