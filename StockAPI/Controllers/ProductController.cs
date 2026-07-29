@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockAPI.Dto;
+using StockAPI.Dto.Requests;
 using StockAPI.Services;
 
 namespace StockAPI.Controllers
@@ -52,7 +53,21 @@ namespace StockAPI.Controllers
 
         // PUT api/<ProductController>/5
         [HttpPut("{ean}")]
-        public async Task<ActionResult> PutProductAsync(string ean, [FromBody] ProductDTO product)
+        public async Task<ActionResult> PutProductAsync(string ean, [FromBody] ProductPatchDTO product)
+        {
+            var result = await _service.UpdateProductAsync(ean, product);
+
+            if (!result.IsSuccess)
+            {
+                return NotFound(result.Error);
+            }
+
+            return Ok();
+        }
+
+        // PATCH api/<ProductController>/5
+        [HttpPatch("{ean}")]
+        public async Task<ActionResult> PatchProductAsync(string ean, [FromBody] ProductPatchDTO product)
         {
             var result = await _service.UpdateProductAsync(ean, product);
 
