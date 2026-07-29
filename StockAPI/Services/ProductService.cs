@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StockAPI.Common;
 using StockAPI.Dto;
+using StockAPI.Dto.Requests;
 using StockAPI.Models;
 using StockAPI.Repositorys;
 
@@ -69,20 +70,20 @@ namespace StockAPI.Services
             }
         }
 
-        public async Task<Result<ProductDTO>> UpdateProductAsync(string ean, ProductDTO product)
+        public async Task<Result<ProductPatchDTO>> UpdateProductAsync(string ean, ProductPatchDTO product)
         {
             var model = await _repository.GetProductByEanAsync(ean);
 
             if (model == null)
             {
-                return Result<ProductDTO>.Failure("Produto não Encontrado!!");
+                return Result<ProductPatchDTO>.Failure("Produto não Encontrado!!");
             }
 
             _mapper.Map(product, model);
 
             await _repository.UpdateProductAsync();
 
-            return Result<ProductDTO>.Success(product);
+            return Result<ProductPatchDTO>.Success(product);
         }
     }
 }

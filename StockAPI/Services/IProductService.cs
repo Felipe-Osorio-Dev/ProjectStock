@@ -1,5 +1,6 @@
 ﻿using StockAPI.Common;
 using StockAPI.Dto;
+using StockAPI.Dto.Requests;
 
 namespace StockAPI.Services
 {
@@ -9,6 +10,6 @@ namespace StockAPI.Services
         Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
         Task<Result<ProductDTO>> GetProductByEanAsync(string ean);
         Task<Result> DeleteProductByEanAsync(string ean);
-        Task<Result<ProductDTO>> UpdateProductAsync(string ean, ProductDTO product);
+        Task<Result<ProductPatchDTO>> UpdateProductAsync(string ean, ProductPatchDTO product);
     }
 }
