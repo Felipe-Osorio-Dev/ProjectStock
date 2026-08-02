@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StockAPI.Dto;
 using StockAPI.Dto.Requests;
+using StockAPI.Dto.Responses;
 using StockAPI.Services;
 
 namespace StockAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -18,16 +18,16 @@ namespace StockAPI.Controllers
 
         // GET: api/<ProductController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProductsAsync()
+        public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetAllProductsAsync()
         {
             return Ok(await _service.GetAllProductsAsync());
         }
 
         // GET api/<ProductController>/5
-        [HttpGet("{ean}")]
-        public async Task<ActionResult<ProductDTO>> GetProductByEAN(string ean)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductResponseDTO>> GetProductByIdAsync(long id)
         {
-            var result = await _service.GetProductByEanAsync(ean);
+            var result = await _service.GetProductByIdAsync(id);
 
             if (!result.IsSuccess)
             {
@@ -39,7 +39,7 @@ namespace StockAPI.Controllers
 
         // POST api/<ProductController>
         [HttpPost]
-        public async Task<ActionResult> RegisterProductAsync([FromBody] ProductDTO product)
+        public async Task<ActionResult> RegisterProductAsync([FromBody] CreateProductDTO product)
         {
             var result = await _service.RegisterProductAsync(product);
 
@@ -48,42 +48,42 @@ namespace StockAPI.Controllers
                 return Conflict(result.Error);
             }
 
-            return CreatedAtAction(nameof(GetProductByEAN), new { ean = result.Value.EAN }, result.Value);
+            return CreatedAtAction(nameof(GetProductByIdAsync), new { id = result.Value.Id }, result.Value);
         }
 
         // PUT api/<ProductController>/5
-        [HttpPut("{ean}")]
-        public async Task<ActionResult> PutProductAsync(string ean, [FromBody] ProductPatchDTO product)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ProductResponseDTO>> PutProductAsync(long id, [FromBody] ProductPatchDTO product)
         {
-            var result = await _service.UpdateProductAsync(ean, product);
+            var result = await _service.UpdateProductAsync(id, product);
 
             if (!result.IsSuccess)
             {
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return result.Value;
         }
 
         // PATCH api/<ProductController>/5
-        [HttpPatch("{ean}")]
-        public async Task<ActionResult> PatchProductAsync(string ean, [FromBody] ProductPatchDTO product)
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<ProductResponseDTO>> PatchProductAsync(long id, [FromBody] ProductPatchDTO product)
         {
-            var result = await _service.UpdateProductAsync(ean, product);
+            var result = await _service.UpdateProductAsync(id, product);
 
             if (!result.IsSuccess)
             {
                 return NotFound(result.Error);
             }
 
-            return Ok();
+            return result.Value;
         }
 
         // DELETE api/<ProductController>/5
-        [HttpDelete("{ean}")]
-        public async Task<ActionResult> DeleteProductByEanAsync(string ean)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProductByIdAsync(long id)
         {
-            var result = await _service.DeleteProductByEanAsync(ean);
+            var result = await _service.DeleteProductByIdAsync(id);
 
             if(!result.IsSuccess)
             {
