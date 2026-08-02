@@ -1,8 +1,8 @@
 ﻿using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using StockAPI.Common;
-using StockAPI.Dto;
 using StockAPI.Dto.Requests;
+using StockAPI.Dto.Responses;
 using StockAPI.Models;
 using StockAPI.Repositorys;
 
@@ -19,42 +19,28 @@ namespace StockAPI.Services
             _mapper = mapper;
         }
 
-        public async Task<Result> DeleteProductByEanAsync(string ean)
-        {
-            var model = await _repository.GetProductByEanAsync(ean);
-
-            if (model == null)
-            {
-                return Result.Failure("Produto não Encontrado!!");
-            }
-
-            await _repository.DeleteProductByEanAsync(model);
-
-            return Result.Success();
-        }
-
-        public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
+        public async Task<IEnumerable<ProductResponseDTO>> GetAllProductsAsync()
         {
             var products = await _repository.GetAllProductsAsync();
 
-            return _mapper.Map<IEnumerable<ProductDTO>>(products);
+            return _mapper.Map<IEnumerable<ProductResponseDTO>>(products);
         }
 
-        public async Task<Result<ProductDTO>> GetProductByEanAsync(string ean)
+        public async Task<Result<ProductResponseDTO>> GetProductByIdAsync(long id)
         {
-            var model = await _repository.GetProductByEanAsync(ean);
+            var model = await _repository.GetProductByIdAsync(id);
 
             if(model == null)
             {
-                return Result<ProductDTO>.Failure("Produto não Encontrado!!");
+                return Result<ProductResponseDTO>.Failure("Produto não Encontrado!!");
             }
 
-            var product = _mapper.Map<ProductDTO>(model);
+            var product = _mapper.Map<ProductResponseDTO>(model);
 
-            return Result<ProductDTO>.Success(product);
+            return Result<ProductResponseDTO>.Success(product);
         }
 
-        public async Task<Result<ProductDTO>> RegisterProductAsync(ProductDTO product)
+        public async Task<Result<ProductResponseDTO>> RegisterProductAsync(CreateProductDTO product)
         {
             try
             {
@@ -62,28 +48,46 @@ namespace StockAPI.Services
 
                 await _repository.RegisterProductAsync(model);
 
-                return Result<ProductDTO>.Success(product);
+                var dto = _mapper.Map<ProductResponseDTO>(model);
+
+                return Result<ProductResponseDTO>.Success(dto);
             }
             catch (DbUpdateException)
             {
-                return Result<ProductDTO>.Failure("Produto Ja Cadastrado!!");
+                return Result<ProductResponseDTO>.Failure("Produto Ja Cadastrado!!");
             }
         }
 
-        public async Task<Result<ProductPatchDTO>> UpdateProductAsync(string ean, ProductPatchDTO product)
+        public async Task<Result<ProductResponseDTO>> UpdateProductAsync(long id, ProductPatchDTO product)
         {
-            var model = await _repository.GetProductByEanAsync(ean);
+            var model = await _repository.GetProductByIdAsync(id);
 
             if (model == null)
             {
-                return Result<ProductPatchDTO>.Failure("Produto não Encontrado!!");
+                return Result<ProductResponseDTO>.Failure("Produto não Encontrado!!");
             }
 
             _mapper.Map(product, model);
 
             await _repository.UpdateProductAsync();
 
-            return Result<ProductPatchDTO>.Success(product);
+            var response = _mapper.Map<ProductResponseDTO>(model);
+
+            return Result<ProductResponseDTO>.Success(response);
+        }
+
+        public async Task<Result> DeleteProductByIdAsync(long id)
+        {
+            var model = await _repository.GetProductByIdAsync(id);
+
+            if (model == null)
+            {
+                return Result.Failure("Produto não Encontrado!!");
+            }
+
+            await _repository.DeleteProductByIdAsync(model);
+
+            return Result.Success();
         }
     }
 }

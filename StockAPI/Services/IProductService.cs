@@ -1,15 +1,15 @@
 ﻿using StockAPI.Common;
-using StockAPI.Dto;
 using StockAPI.Dto.Requests;
+using StockAPI.Dto.Responses;
 
 namespace StockAPI.Services
 {
     public interface IProductService
     {
-        Task<Result<ProductDTO>> RegisterProductAsync(ProductDTO product);
-        Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
-        Task<Result<ProductDTO>> GetProductByEanAsync(string ean);
-        Task<Result> DeleteProductByEanAsync(string ean);
-        Task<Result<ProductPatchDTO>> UpdateProductAsync(string ean, ProductPatchDTO product);
+        Task<Result<ProductResponseDTO>> RegisterProductAsync(CreateProductDTO product);
+        Task<IEnumerable<ProductResponseDTO>> GetAllProductsAsync();
+        Task<Result<ProductResponseDTO>> GetProductByIdAsync(long id);
+        Task<Result> DeleteProductByIdAsync(long id);
+        Task<Result<ProductResponseDTO>> UpdateProductAsync(long id, ProductPatchDTO product);
     }
 }
