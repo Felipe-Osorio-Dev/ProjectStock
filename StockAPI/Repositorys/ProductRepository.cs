@@ -13,7 +13,7 @@ namespace StockAPI.Repositorys
             _dbContext = dbContext;
         }
 
-        public async Task DeleteProductByEanAsync(ProductModel model)
+        public async Task DeleteProductByIdAsync(ProductModel model)
         {
             _dbContext.Produtos.Remove(model);
             await _dbContext.SaveChangesAsync();
@@ -24,13 +24,8 @@ namespace StockAPI.Repositorys
             return await _dbContext.Produtos.ToListAsync();
         }
 
-        public async Task<ProductModel?> GetProductByEanAsync(string ean)
-        { 
-            return await _dbContext.Produtos.FirstOrDefaultAsync(p => p.EAN == ean);
-        }
-
         public async Task<ProductModel?> GetProductByIdAsync(long id)
-        {
+        { 
             return await _dbContext.Produtos.FindAsync(id);
         }
 
