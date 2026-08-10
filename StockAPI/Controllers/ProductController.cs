@@ -45,7 +45,7 @@ namespace StockAPI.Controllers
 
             if(!result.IsSuccess)
             {
-                return Conflict(result.Error);
+                return Conflict(new ApiErrorResponseDTO(StatusCodes.Status409Conflict, result.Error));
             }
 
             return CreatedAtAction(nameof(GetProductByIdAsync), new { id = result.Value.Id }, result.Value);
