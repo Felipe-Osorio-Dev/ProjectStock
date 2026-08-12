@@ -1,4 +1,6 @@
-﻿namespace StockAPP.Service.Navigation
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace StockAPP.Service.Navigation
 {
     internal class NavigationService : INavigationService
     {
@@ -10,7 +12,7 @@
             _provider = provider;
         }
 
-        public void NavigateTo<TForm>() where TForm : Form, new()
+        public void NavigateTo<TForm>() where TForm : Form
         {
             if (_mdiParent == null)
             {
@@ -25,12 +27,10 @@
                 return ;
             }
 
-            var form = new TForm();
+            var form = _provider.GetRequiredService<TForm>();
 
             form.MdiParent = _mdiParent;
             form.Show();
-
-
         }
 
         public void SetParentMDI(Form parent)

@@ -1,6 +1,11 @@
-﻿namespace StockAPP.Service.Api
+﻿using StockAPP.DTO.Requests;
+using StockAPP.DTO.Responses;
+using StockAPP.Util;
+
+namespace StockAPP.Service.Api
 {
-    internal interface IProductService
+    public interface IProductService
     {
+        Task<Result<ProductResponseDTO>> RegisterProductAsync(RegisterProductDTO product);
     }
 }
