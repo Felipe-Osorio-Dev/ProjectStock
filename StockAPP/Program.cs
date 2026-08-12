@@ -46,7 +46,7 @@ namespace StockAPP
             services.AddHttpClient<IProductService, ProductService>()
                 .ConfigureHttpClient(client =>
                 {
-                    client.BaseAddress = new Uri("https://localhost:7091/api/products");
+                    client.BaseAddress = new Uri("https://localhost:7091/api/products/");
                     client.DefaultRequestHeaders.Add("Accept", "application/json");
                 });
         }
