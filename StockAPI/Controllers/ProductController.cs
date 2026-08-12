@@ -25,7 +25,7 @@ namespace StockAPI.Controllers
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductResponseDTO>> GetProductByIdAsync(long id)
+        public async Task<ActionResult<ProductResponseDTO>> GetProductById(long id)
         {
             var result = await _service.GetProductByIdAsync(id);
 
@@ -48,7 +48,7 @@ namespace StockAPI.Controllers
                 return Conflict(new ApiErrorResponseDTO(StatusCodes.Status409Conflict, result.Error));
             }
 
-            return CreatedAtAction(nameof(GetProductByIdAsync), new { id = result.Value.Id }, result.Value);
+            return CreatedAtAction(nameof(GetProductById), new { id = result.Value.Id }, result.Value);
         }
 
         // PUT api/<ProductController>/5
