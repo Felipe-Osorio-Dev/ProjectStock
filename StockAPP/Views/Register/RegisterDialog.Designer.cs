@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            textBox1 = new TextBox();
+            txtBoxProductName = new TextBox();
             label2 = new Label();
             label3 = new Label();
-            textBox2 = new TextBox();
+            txtBoxEan = new TextBox();
             label4 = new Label();
             numericAmount = new NumericUpDown();
             label5 = new Label();
@@ -52,18 +52,18 @@
             label1.TabIndex = 0;
             label1.Text = "Cadastrar Produto";
             // 
-            // textBox1
+            // txtBoxProductName
             // 
-            textBox1.Location = new Point(23, 127);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 23);
-            textBox1.TabIndex = 1;
+            txtBoxProductName.Location = new Point(184, 128);
+            txtBoxProductName.Name = "txtBoxProductName";
+            txtBoxProductName.Size = new Size(125, 23);
+            txtBoxProductName.TabIndex = 1;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F);
-            label2.Location = new Point(23, 105);
+            label2.Location = new Point(184, 105);
             label2.Name = "label2";
             label2.Size = new Size(49, 19);
             label2.TabIndex = 2;
@@ -73,18 +73,19 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10F);
-            label3.Location = new Point(183, 105);
+            label3.Location = new Point(23, 105);
             label3.Name = "label3";
             label3.Size = new Size(125, 19);
             label3.TabIndex = 3;
             label3.Text = "Cod. Fabrica (EAN):";
             // 
-            // textBox2
+            // txtBoxEan
             // 
-            textBox2.Location = new Point(183, 127);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(125, 23);
-            textBox2.TabIndex = 4;
+            txtBoxEan.Location = new Point(23, 128);
+            txtBoxEan.MaxLength = 13;
+            txtBoxEan.Name = "txtBoxEan";
+            txtBoxEan.Size = new Size(125, 23);
+            txtBoxEan.TabIndex = 4;
             // 
             // label4
             // 
@@ -157,10 +158,10 @@
             Controls.Add(label5);
             Controls.Add(numericAmount);
             Controls.Add(label4);
-            Controls.Add(textBox2);
+            Controls.Add(txtBoxEan);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(textBox1);
+            Controls.Add(txtBoxProductName);
             Controls.Add(label1);
             MaximizeBox = false;
             MinimizeBox = false;
@@ -175,10 +176,10 @@
         #endregion
 
         private Label label1;
-        private TextBox textBox1;
+        private TextBox txtBoxProductName;
         private Label label2;
         private Label label3;
-        private TextBox textBox2;
+        private TextBox txtBoxEan;
         private Label label4;
         private NumericUpDown numericAmount;
         private Label label5;
