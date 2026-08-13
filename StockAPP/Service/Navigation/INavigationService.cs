@@ -3,6 +3,6 @@
     public interface INavigationService
     {
         void SetParentMDI(Form parent);
-        void NavigateTo<TForm>() where TForm : Form;
+        void NavigateTo<TForm, TPresenter>() where TForm : Form where TPresenter : class;
     }
 }

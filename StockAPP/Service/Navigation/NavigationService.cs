@@ -1,18 +1,18 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using StockAPP.Util;
 
 namespace StockAPP.Service.Navigation
 {
     internal class NavigationService : INavigationService
     {
-        private readonly IServiceProvider _provider;
+        private readonly IFormFactory _formFactory;
         private Form? _mdiParent;
 
-        public NavigationService(IServiceProvider provider)
+        public NavigationService(IFormFactory formFactory)
         {
-            _provider = provider;
+            _formFactory = formFactory;
         }
 
-        public void NavigateTo<TForm>() where TForm : Form
+        public void NavigateTo<TForm, TPresenter>() where TForm : Form where TPresenter : class
         {
             if (_mdiParent == null)
             {
@@ -27,7 +27,7 @@ namespace StockAPP.Service.Navigation
                 return ;
             }
 
-            var form = _provider.GetRequiredService<TForm>();
+            var form = _formFactory.CreateForm<TForm, TPresenter>();
 
             form.MdiParent = _mdiParent;
             form.Show();
