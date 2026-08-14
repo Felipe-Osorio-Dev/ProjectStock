@@ -54,13 +54,14 @@
             // produtosToolStripMenuItem
             // 
             produtosToolStripMenuItem.Name = "produtosToolStripMenuItem";
-            produtosToolStripMenuItem.Size = new Size(122, 22);
+            produtosToolStripMenuItem.Size = new Size(180, 22);
             produtosToolStripMenuItem.Text = "Produtos";
+            produtosToolStripMenuItem.Click += produtosToolStripMenuItem_Click;
             // 
             // cadastroToolStripMenuItem
             // 
             cadastroToolStripMenuItem.Name = "cadastroToolStripMenuItem";
-            cadastroToolStripMenuItem.Size = new Size(122, 22);
+            cadastroToolStripMenuItem.Size = new Size(180, 22);
             cadastroToolStripMenuItem.Text = "Cadastro";
             cadastroToolStripMenuItem.Click += cadastroToolStripMenuItem_Click;
             // 

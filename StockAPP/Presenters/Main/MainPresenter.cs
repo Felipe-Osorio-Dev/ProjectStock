@@ -1,8 +1,10 @@
 ﻿using StockAPP.DTO.Requests;
+using StockAPP.Presenters.Stock;
 using StockAPP.Service.Api;
 using StockAPP.Service.Navigation;
 using StockAPP.Views.MainContainer;
 using StockAPP.Views.RegisterForm;
+using StockAPP.Views.Stock;
 
 namespace StockAPP.Presenters.Main
 {
@@ -21,6 +23,7 @@ namespace StockAPP.Presenters.Main
             _navigationService.SetParentMDI((Form) _view);
 
             _view.ClickedRegisterProducts += OnClickedRegisterProducts;
+            _view.ClickedStockProducts += OnClickedStockProducts;
         }
 
         private async void OnClickedRegisterProducts(object sender, EventArgs e)
@@ -50,6 +53,11 @@ namespace StockAPP.Presenters.Main
 
                 MessageBox.Show(result.Error);
             }
+        }
+
+        private void OnClickedStockProducts(object sender, EventArgs e)
+        {
+            _navigationService.NavigateTo<StockForm, StockPresenter>();
         }
     }
 }
