@@ -7,5 +7,6 @@ namespace StockAPP.Service.Api
     public interface IProductService
     {
         Task<Result<ProductResponseDTO>> RegisterProductAsync(RegisterProductDTO product);
+        Task<Result<List<ProductResponseDTO>>> LoadProductsAsync();
     }
 }
